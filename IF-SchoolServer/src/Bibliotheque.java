@@ -10,14 +10,14 @@ public class Bibliotheque extends UnicastRemoteObject implements IBibliotheque  
 		maBibliotheque = new HashMap<Long, Livre>();
 	}	
 		
-	public void ajouterLivre (long ISBN, String titre,String auteur) throws RemoteException{
-		Livre livre = new Livre(ISBN,titre,auteur);		
+	public void ajouterLivre (long ISBN, String titre,String auteur,int nbExemplaires) throws RemoteException{
+		Livre livre = new Livre(ISBN,titre,auteur,nbExemplaires);		
 		maBibliotheque.put(new Long(ISBN),livre);
 		System.out.println("Livre ajouté");
 	}
 	
 	public void supprimerLivre (long ISBN) throws RemoteException{
-		Livre livre = new Livre(ISBN);
+		
 		maBibliotheque.remove(new Long(ISBN));
 		System.out.println("Livre supprimé");
 	}
@@ -25,9 +25,7 @@ public class Bibliotheque extends UnicastRemoteObject implements IBibliotheque  
 	public ArrayList<ILivre> rechercherLivre (String critere) throws RemoteException{
 		ArrayList<ILivre> res = new ArrayList<ILivre>();
 		for (Livre l : maBibliotheque.values()) {
-			if(l.getAuteur().contains(critere))
-				res.add(l);
-			if(l.getTitre().contains(critere))
+			if(l.getAuteur().contains(critere) || l.getTitre().contains(critere))
 				res.add(l);
 		}
 		return res;
@@ -44,17 +42,28 @@ public class Bibliotheque extends UnicastRemoteObject implements IBibliotheque  
 		if(l.getNombreExemplaires() > l.getLivreEmpruntes()){
 			System.out.println("Vous avez 3 semaines pour rendre le livre");
 			l.setLivreEmpruntes(l.getLivreEmpruntes()+1);
+			//l.addListeEmprunteurs(e);
 		}
 		else{
 			System.out.println("Livre indisponible");
 			l.addListeAttente(e);
 		}
 	}
-	public void rendreLiver(ILivre l) throws RemoteException{
-		System.out.println(l.toString()+" rendu");
+	public void rendreLiver(ILivre l,IEtudiant e) throws RemoteException{
+		System.out.println(l.affiche()+" rendu");
 		if(l.getListeAttente().size()>0){
 			l.removeListeAttente();
 		}
+		//l.getListeEmprunteurs().remove(e);
 		l.setLivreEmpruntes(l.getLivreEmpruntes()-1);
 	}
+
+	/*public ArrayList<ILivre> livresEmpruntes(IEtudiant e) throws RemoteException {
+		ArrayList<ILivre> livres = new ArrayList<ILivre>();
+		for (ILivre l : maBibliotheque.values()) {
+			if(l.getListeEmprunteurs().contains(e))
+				livres.add(l);
+		}
+		return livres;
+	}*/
 }
