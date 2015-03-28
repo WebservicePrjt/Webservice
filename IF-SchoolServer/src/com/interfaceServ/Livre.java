@@ -1,6 +1,10 @@
+package com.interfaceServ;
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.ArrayList;
+import java.util.Date;
+
+import com.interfaceClient.IEtudiant;
 
 public class Livre extends UnicastRemoteObject implements ILivre,IObservee{
 	private String titre;
@@ -10,6 +14,8 @@ public class Livre extends UnicastRemoteObject implements ILivre,IObservee{
 	private ArrayList<String> resumes;
 	private int nombreExemplaires;
 	private int livreEmpruntes;
+	private boolean emprunte;
+	private Date dateAjout;
 	private ArrayList<IEtudiant> listeAttente;
 	private ArrayList<IEtudiant> listeEmprunteurs;
 
@@ -143,7 +149,20 @@ public class Livre extends UnicastRemoteObject implements ILivre,IObservee{
 		return "Livre [ Titre = " + this.titre + ", ISBN = " + this.ISBN + ", Auteur = "
 				+ this.auteur + " ]";
 	}
-	
-	
-	
+
+	public boolean isEmprunte() {
+		return emprunte;
+	}
+
+	public void setEmprunte(boolean emprunte) {
+		this.emprunte = emprunte;
+	}
+
+	public Date getDateAjout() {
+		return dateAjout;
+	}
+
+	public void setDateAjout(Date dateAjout) {
+		this.dateAjout = dateAjout;
+	}
 }

@@ -1,5 +1,8 @@
+package com.interfaceServ;
 import java.rmi.*;
 import java.util.*;
+
+import com.interfaceClient.IEtudiant;
 public interface IBibliotheque extends Remote {
 	public void ajouterLivre (long ISBN, String titre,String auteur,int nbExemplaires) throws RemoteException;
 	public void supprimerLivre (long ISBN) throws RemoteException;
@@ -9,5 +12,5 @@ public interface IBibliotheque extends Remote {
 	public void emprunterLivre(ILivre l, IEtudiant e) throws RemoteException;
 	public void rendreLiver(ILivre l,IEtudiant e) throws RemoteException;
 	//public ArrayList<ILivre> livresEmpruntes(IEtudiant e) throws RemoteException;
-	
+	public ArrayList<ILivre> getMaBibliotheque() throws RemoteException;
 }

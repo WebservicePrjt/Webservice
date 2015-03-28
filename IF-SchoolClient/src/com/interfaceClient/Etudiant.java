@@ -1,5 +1,8 @@
+package com.interfaceClient;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+
+import com.interfaceServ.ILivre;
 
 //observateur
 public class Etudiant extends UnicastRemoteObject implements IEtudiant{

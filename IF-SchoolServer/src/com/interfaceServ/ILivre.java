@@ -1,5 +1,9 @@
+package com.interfaceServ;
 import java.rmi.*;
 import java.util.ArrayList;
+import java.util.Date;
+
+import com.interfaceClient.IEtudiant;
 public interface ILivre extends Remote{
 	
 	public long getISBN() throws RemoteException;
@@ -25,4 +29,8 @@ public interface ILivre extends Remote{
 	public void setListeEmprunteurs(ArrayList<IEtudiant> listeEmprunteurs) throws RemoteException;
 	public void addListeEmprunteurs(IEtudiant e) throws RemoteException;
 	public String affiche() throws RemoteException;
+	public boolean isEmprunte()throws RemoteException;
+	public void setEmprunte(boolean emprunte) throws RemoteException;
+	public Date getDateAjout()throws RemoteException;
+	public void setDateAjout(Date dateAjout) throws RemoteException;
 }
