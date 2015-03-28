@@ -2,6 +2,7 @@ package com.interfaceServ;
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.interfaceClient.IEtudiant;
@@ -15,7 +16,8 @@ public class Livre extends UnicastRemoteObject implements ILivre,IObservee{
 	private int nombreExemplaires;
 	private int livreEmpruntes;
 	private boolean emprunte;
-	private Date dateAjout;
+	private Calendar dateAjout;
+	private double prix;
 	private ArrayList<IEtudiant> listeAttente;
 	private ArrayList<IEtudiant> listeEmprunteurs;
 
@@ -158,11 +160,22 @@ public class Livre extends UnicastRemoteObject implements ILivre,IObservee{
 		this.emprunte = emprunte;
 	}
 
-	public Date getDateAjout() {
+	public Calendar getDateAjout() {
 		return dateAjout;
 	}
 
-	public void setDateAjout(Date dateAjout) {
+	public void setDateAjout(Calendar dateAjout) {
 		this.dateAjout = dateAjout;
+	}
+
+	@Override
+	public double getPrix() {
+		
+		return prix;
+	}
+
+	@Override
+	public void setPrix(double prix) {
+		this.prix = prix;	
 	}
 }

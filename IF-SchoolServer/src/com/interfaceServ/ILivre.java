@@ -1,6 +1,7 @@
 package com.interfaceServ;
 import java.rmi.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.interfaceClient.IEtudiant;
@@ -31,6 +32,8 @@ public interface ILivre extends Remote{
 	public String affiche() throws RemoteException;
 	public boolean isEmprunte();
 	public void setEmprunte(boolean emprunte);
-	public Date getDateAjout();
-	public void setDateAjout(Date dateAjout);
+	public Calendar getDateAjout();
+	public void setDateAjout(Calendar dateAjout);
+	public double getPrix();
+	public void setPrix(double prix);
 }
