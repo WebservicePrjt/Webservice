@@ -26,8 +26,10 @@ public class Bibliotheque extends UnicastRemoteObject implements IBibliotheque  
 	}
 
 	public void ajouterLivre (long ISBN, String titre,String auteur,int nbExemplaires) throws RemoteException{
-		Livre livre = new Livre(ISBN,titre,auteur,nbExemplaires);		
+		Livre livre = new Livre(ISBN,titre,auteur,nbExemplaires);	
+		livre.setEmprunte(false);
 		maBibliotheque.put(new Long(ISBN),livre);
+		livre.setDateAjout(new Date());
 		System.out.println("Livre ajouté");
 	}
 	
@@ -57,6 +59,7 @@ public class Bibliotheque extends UnicastRemoteObject implements IBibliotheque  
 		if(l.getNombreExemplaires() > l.getLivreEmpruntes()){
 			System.out.println("Vous avez 3 semaines pour rendre le livre");
 			l.setLivreEmpruntes(l.getLivreEmpruntes()+1);
+			l.setEmprunte(true);
 			//l.addListeEmprunteurs(e);
 		}
 		else{
