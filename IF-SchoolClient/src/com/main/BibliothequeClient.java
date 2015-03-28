@@ -1,8 +1,13 @@
+package com.main;
 import java.rmi.*;
 import java.util.*;
+
+import com.interfaceClient.Etudiant;
+import com.interfaceServ.IBibliotheque;
+import com.interfaceServ.ILivre;
 public class BibliothequeClient{
 	
-	public static void main(String[] args){	
+	/*public static void main(String[] args){	
 		try{
 			IBibliotheque b = (IBibliotheque) Naming.lookup("rmi://localhost:1099/IF_School");
 			System.out.println("Bienvenue sur IF-School, votre bibliothèque en ligne");
@@ -44,9 +49,9 @@ public class BibliothequeClient{
 					case 6:
 						emprunterLivre(b,sc,e);
 						break;
-					/*case 7:
+					case 7:
 						retournerLiver(b,sc,e);
-						break;*/
+						break;
 					case 0:
 						System.out.println("A bientot sur IF-School");
 						sortie = true;
@@ -61,9 +66,9 @@ public class BibliothequeClient{
 		} catch (Exception e){
 			System.out.println("trouble : "+e);
 		}
-	}
+	}*/
 
-	private static void retournerLiver(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
+	public void retournerLiver(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
 		/*ArrayList<ILivre> livres = b.livresEmpruntes(e);
 		for (int i=0;i<livres.size();i++) {
 			System.out.println((i+1)+" - "+livres.get(i).affiche());
@@ -73,15 +78,19 @@ public class BibliothequeClient{
 		
 		//b.rendreLiver(choix, e);
 	}
-
-	private static void emprunterLivre(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
+	
+	public ArrayList<ILivre> listeDesLivre(IBibliotheque b) throws RemoteException{
+		return b.getMaBibliotheque();
+	}
+	
+	public void emprunterLivre(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
 		ArrayList<ILivre> livres = rechercherLivre(b, sc);
 		System.out.println("Veuillez saisir le numero du livre que vous voulez emprunter");
 		int choix = sc.nextInt();
 		b.emprunterLivre(livres.get(choix-1),e);
 	}
 	
-	private static void ajouterCommentaire(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
+	public void ajouterCommentaire(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
 		ArrayList<ILivre> livres = rechercherLivre(b, sc);
 		System.out.println("Veuillez saisir le numero du livre que vous voulez commenter");
 		int choix = sc.nextInt();
@@ -91,7 +100,7 @@ public class BibliothequeClient{
 		b.ajouterCommentaireLivre(livres.get(choix-1), comm);
 	}
 	
-	private static void ajouterResume(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
+	public void ajouterResume(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
 		ArrayList<ILivre> livres = rechercherLivre(b, sc);
 		System.out.println("Veuillez saisir le numero du livre que vous voulez emprunter");
 		int choix = sc.nextInt();
@@ -101,7 +110,7 @@ public class BibliothequeClient{
 		b.ajouterCommentaireLivre(livres.get(choix-1), comm);
 	}
 
-	private static ArrayList<ILivre> rechercherLivre(IBibliotheque b, Scanner sc) throws RemoteException {
+	public ArrayList<ILivre> rechercherLivre(IBibliotheque b, Scanner sc) throws RemoteException {
 		System.out.println("Veuillez saisir le titre ou l'auteur du livre");
 		String critere = sc.next();
 		ArrayList<ILivre> livres = b.rechercherLivre(critere);
@@ -112,13 +121,13 @@ public class BibliothequeClient{
 		return livres;
 	}
 
-	private static void supprimerLivre(IBibliotheque b, Scanner sc) throws RemoteException {
+	public void supprimerLivre(IBibliotheque b, Scanner sc) throws RemoteException {
 		System.out.println("Veuillez saisir le ISBN du livre");
 		long isbn = sc.nextLong();
 		b.supprimerLivre(isbn);
 	}
 	
-	private static void ajouterLivre(IBibliotheque b,Scanner sc) throws RemoteException {
+	public void ajouterLivre(IBibliotheque b,Scanner sc) throws RemoteException {
 		System.out.println("Veuillez saisir le ISBN du livre");
 		long isbn = sc.nextLong();
 		System.out.println("Veuillez saisir le titre du livre");

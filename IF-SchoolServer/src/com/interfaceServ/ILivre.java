@@ -1,5 +1,8 @@
+package com.interfaceServ;
 import java.rmi.*;
 import java.util.ArrayList;
+
+import com.interfaceClient.IEtudiant;
 public interface ILivre extends Remote{
 	
 	public long getISBN() throws RemoteException;

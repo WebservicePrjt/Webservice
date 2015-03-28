@@ -1,4 +1,7 @@
+package com.main;
 import java.rmi.Naming;
+
+import com.interfaceServ.Bibliotheque;
 public class BibliothequeServeur{
 
 	public static void main(String[] args){

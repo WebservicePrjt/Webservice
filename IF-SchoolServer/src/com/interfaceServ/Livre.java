@@ -1,6 +1,9 @@
+package com.interfaceServ;
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.ArrayList;
+
+import com.interfaceClient.IEtudiant;
 
 public class Livre extends UnicastRemoteObject implements ILivre,IObservee{
 	private String titre;

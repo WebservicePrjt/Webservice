@@ -1,6 +1,9 @@
+package com.interfaceServ;
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.*;
+
+import com.interfaceClient.IEtudiant;
 
 public class Bibliotheque extends UnicastRemoteObject implements IBibliotheque  {
 	private HashMap<Long, Livre> maBibliotheque;
@@ -10,6 +13,18 @@ public class Bibliotheque extends UnicastRemoteObject implements IBibliotheque  
 		maBibliotheque = new HashMap<Long, Livre>();
 	}	
 		
+	public ArrayList<ILivre> getMaBibliotheque() throws RemoteException{
+		ArrayList<ILivre> res = new ArrayList<ILivre>();
+		for (Livre l : maBibliotheque.values()) {
+			res.add(l);
+		}
+		return res;
+	}
+
+	public void setMaBibliotheque(HashMap<Long, Livre> maBibliotheque) {
+		this.maBibliotheque = maBibliotheque;
+	}
+
 	public void ajouterLivre (long ISBN, String titre,String auteur,int nbExemplaires) throws RemoteException{
 		Livre livre = new Livre(ISBN,titre,auteur,nbExemplaires);		
 		maBibliotheque.put(new Long(ISBN),livre);
