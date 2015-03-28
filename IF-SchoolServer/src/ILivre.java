@@ -16,9 +16,13 @@ public interface ILivre extends Remote{
 	public void setListeAttente(ArrayList<IEtudiant> listeAttente)throws RemoteException;
 	public void addListeAttente(IEtudiant obs) throws RemoteException;
 	public void removeListeAttente() throws RemoteException;
-	public void changeValue(IEtudiant obs)throws RemoteException;
+	public void changeValue(IEtudiant obs,String action)throws RemoteException;
 	public int getLivreEmpruntes()throws RemoteException;
 	public void setLivreEmpruntes(int livreEmpruntes)throws RemoteException;
 	public int getNombreExemplaires()throws RemoteException;
 	public void setNombreExemplaires(int nombreExemplaires)throws RemoteException;
+	public ArrayList<IEtudiant> getListeEmprunteurs() throws RemoteException;
+	public void setListeEmprunteurs(ArrayList<IEtudiant> listeEmprunteurs) throws RemoteException;
+	public void addListeEmprunteurs(IEtudiant e) throws RemoteException;
+	public String affiche() throws RemoteException;
 }

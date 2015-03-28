@@ -1,6 +1,7 @@
 import java.rmi.*;
 import java.util.*;
 public class BibliothequeClient{
+	
 	public static void main(String[] args){	
 		try{
 			IBibliotheque b = (IBibliotheque) Naming.lookup("rmi://localhost:1099/IF_School");
@@ -12,7 +13,8 @@ public class BibliothequeClient{
 			System.out.println("Prenom :");
 			String prenom = sc.next();
 			Etudiant e = new Etudiant(nom,prenom);
-			while(true){
+			boolean sortie = false;
+			while(!sortie){
 				System.out.println("Liste des fonction : ");
 				System.out.println("1 - Ajouter un livre");
 				System.out.println("2 - Supprimer un livre");
@@ -33,27 +35,43 @@ public class BibliothequeClient{
 					case 3:
 						rechercherLivre(b,sc);
 						break;
+					case 4:
+						ajouterCommentaire(b, sc, e);
+						break;
+					case 5:
+						ajouterResume(b, sc, e);
+						break;
 					case 6:
 						emprunterLivre(b,sc,e);
 						break;
-					case 7:
-						retournerLiver(b,sc);
-						break;
+					/*case 7:
+						retournerLiver(b,sc,e);
+						break;*/
 					case 0:
 						System.out.println("A bientot sur IF-School");
+						sortie = true;
+						break;
 					default:
-						sc.close();
+						System.out.println("Choix incorrect, veuillez réessayer");
 						break;
 				}
 			}
+			sc.close();
+			
 		} catch (Exception e){
 			System.out.println("trouble : "+e);
 		}
 	}
 
-	private static void retournerLiver(IBibliotheque b, Scanner sc) {
-		// TODO Auto-generated method stub
+	private static void retournerLiver(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
+		/*ArrayList<ILivre> livres = b.livresEmpruntes(e);
+		for (int i=0;i<livres.size();i++) {
+			System.out.println((i+1)+" - "+livres.get(i).affiche());
+		}*/
+		System.out.println("ISBN du livre voulez vous remettre ?");
+		long choix = sc.nextLong();
 		
+		//b.rendreLiver(choix, e);
 	}
 
 	private static void emprunterLivre(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
@@ -62,13 +80,34 @@ public class BibliothequeClient{
 		int choix = sc.nextInt();
 		b.emprunterLivre(livres.get(choix-1),e);
 	}
+	
+	private static void ajouterCommentaire(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
+		ArrayList<ILivre> livres = rechercherLivre(b, sc);
+		System.out.println("Veuillez saisir le numero du livre que vous voulez commenter");
+		int choix = sc.nextInt();
+		System.out.println("Commentaire : ");
+		String comm = sc.next();
+		comm = e.getNom()+" "+ e.getPrenom() +" : "+ comm;
+		b.ajouterCommentaireLivre(livres.get(choix-1), comm);
+	}
+	
+	private static void ajouterResume(IBibliotheque b, Scanner sc,Etudiant e) throws RemoteException {
+		ArrayList<ILivre> livres = rechercherLivre(b, sc);
+		System.out.println("Veuillez saisir le numero du livre que vous voulez emprunter");
+		int choix = sc.nextInt();
+		System.out.println("Resumé : ");
+		String comm = sc.next();
+		comm = e.getNom()+" "+ e.getPrenom() +" : "+ comm;
+		b.ajouterCommentaireLivre(livres.get(choix-1), comm);
+	}
 
 	private static ArrayList<ILivre> rechercherLivre(IBibliotheque b, Scanner sc) throws RemoteException {
 		System.out.println("Veuillez saisir le titre ou l'auteur du livre");
 		String critere = sc.next();
 		ArrayList<ILivre> livres = b.rechercherLivre(critere);
+		System.out.println("Résultats de la recherche ("+livres.size()+" livre(s) trouvés)");
 		for (int i=0;i<livres.size();i++) {
-			System.out.println((i+1)+" - "+livres.get(i));
+			System.out.println((i+1)+" - "+livres.get(i).affiche());
 		}
 		return livres;
 	}
@@ -78,7 +117,7 @@ public class BibliothequeClient{
 		long isbn = sc.nextLong();
 		b.supprimerLivre(isbn);
 	}
-
+	
 	private static void ajouterLivre(IBibliotheque b,Scanner sc) throws RemoteException {
 		System.out.println("Veuillez saisir le ISBN du livre");
 		long isbn = sc.nextLong();
@@ -86,7 +125,10 @@ public class BibliothequeClient{
 		String titre = sc.next();
 		System.out.println("Veuillez saisir l'auteur de ce livre");
 		String auteur = sc.next();
-		b.ajouterLivre(isbn, titre, auteur);
+		System.out.println("Combien d'exemplaire en avez vous ?");
+		int nbExemplaire = sc.nextInt();
+		b.ajouterLivre(isbn, titre, auteur,nbExemplaire);
 		System.out.println("Votre livre a bien été ajouté");
 	}
+	
 }

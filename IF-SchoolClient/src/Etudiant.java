@@ -16,8 +16,30 @@ public class Etudiant extends UnicastRemoteObject implements IEtudiant{
 		this.prenom = prenom;
 	}
 
-	public void notify(ILivre l) throws RemoteException{
-		System.out.println("Le livre que vous avez demandé est disponible");
+	public void notify(ILivre l,String action) throws RemoteException{
+		if (action.equals("remove"))
+			System.out.println("Le livre que vous avez demandé est maintenant disponible");
+		else
+			System.out.println("Le livre que vous avez demandé est indisponible, vous etes ajouté à la liste d'attente");
 	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	
+	
 	
 }
