@@ -1,4 +1,4 @@
-package gui;
+package com.gui;
 
 import java.awt.EventQueue;
 
@@ -125,26 +125,26 @@ public class IFrameLivre extends JInternalFrame {
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addContainerGap()
+					.addComponent(rdbtnIsbn)
+					.addGap(18)
 					.addComponent(rdbtnTitre)
 					.addGap(18)
-					.addComponent(rdbtnIsbn)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(rdbtnAuteur)
-					.addGap(29)
+					.addGap(106)
 					.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btnValider)
-					.addContainerGap(22, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
-						.addComponent(rdbtnTitre)
-						.addComponent(rdbtnIsbn)
-						.addComponent(rdbtnAuteur)
 						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnValider))
+						.addComponent(btnValider)
+						.addComponent(rdbtnIsbn)
+						.addComponent(rdbtnTitre)
+						.addComponent(rdbtnAuteur))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_2.setLayout(gl_panel_2);
@@ -160,10 +160,15 @@ public class IFrameLivre extends JInternalFrame {
 				
 			}
 		});
+		
+				JButton btnModifier = new JButton("Resume");
+				btnModifier.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						resume();
+					}
+				});
+				panel_3.add(btnModifier);
 		panel_3.add(btnNewButton);
-
-		JButton btnModifier = new JButton("Modifier");
-		panel_3.add(btnModifier);
 
 		JButton btnAjouter = new JButton("Ajouter");
 		btnAjouter.addActionListener(new ActionListener() {
@@ -195,6 +200,19 @@ public class IFrameLivre extends JInternalFrame {
 		scrollPane.setViewportView(table);
 		System.out.println("fin de creation");
 
+	}
+
+	protected void resume() {
+		// TODO Auto-generated method stub
+		if(selectedRow > -1){
+			new JDialogResumeLivre((String)table.getValueAt(selectedRow, 0)).setVisible(true);
+			
+			
+		}
+		
+		
+		
+		
 	}
 
 	protected void refreshFilter(String recherche) {
