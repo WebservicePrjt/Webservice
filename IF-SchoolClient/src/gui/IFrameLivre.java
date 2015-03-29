@@ -7,14 +7,18 @@ import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
@@ -38,13 +42,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JRadioButton;
+
 public class IFrameLivre extends JInternalFrame {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTable table;
 	IBibliotheque b;
 	JDialogAddLivre jdialogue = new JDialogAddLivre();
+	int selectedRow;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -97,79 +102,51 @@ public class IFrameLivre extends JInternalFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)),
 				"Recherche", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-
-		JLabel lblNewLabel = new JLabel("ISBN");
-
+		
+		JRadioButton rdbtnIsbn = new JRadioButton("ISBN");
+		
+		JRadioButton rdbtnTitre = new JRadioButton("Titre");
+		
+		JRadioButton rdbtnAuteur = new JRadioButton("Auteur");
+		
 		textField = new JTextField();
 		textField.setColumns(10);
-
-		JLabel lblAuteur = new JLabel("Auteur");
-
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-
-		JLabel lblTitre = new JLabel("Titre");
-
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+		
+		JButton btnValider = new JButton("Valider");
+		btnValider.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String cherche = textField.getText();
+				refreshFilter(cherche);
+				
+			}
+		});
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-		gl_panel_2.setHorizontalGroup(gl_panel_2.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_panel_2
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(lblNewLabel)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblAuteur)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblTitre)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
-		gl_panel_2
-				.setVerticalGroup(gl_panel_2
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_panel_2
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												gl_panel_2
-														.createParallelGroup(
-																Alignment.BASELINE)
-														.addComponent(
-																lblNewLabel)
-														.addComponent(
-																textField,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblAuteur)
-														.addComponent(
-																textField_1,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblTitre)
-														.addComponent(
-																textField_2,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addContainerGap(
-												GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+		gl_panel_2.setHorizontalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(rdbtnTitre)
+					.addGap(18)
+					.addComponent(rdbtnIsbn)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(rdbtnAuteur)
+					.addGap(29)
+					.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnValider)
+					.addContainerGap(22, Short.MAX_VALUE))
+		);
+		gl_panel_2.setVerticalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(rdbtnTitre)
+						.addComponent(rdbtnIsbn)
+						.addComponent(rdbtnAuteur)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnValider))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		panel_2.setLayout(gl_panel_2);
 		panel_1.add(panel_2, BorderLayout.NORTH);
 
@@ -177,6 +154,12 @@ public class IFrameLivre extends JInternalFrame {
 		getContentPane().add(panel_3, BorderLayout.SOUTH);
 
 		JButton btnNewButton = new JButton("Supprimer");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				delete();
+				
+			}
+		});
 		panel_3.add(btnNewButton);
 
 		JButton btnModifier = new JButton("Modifier");
@@ -201,11 +184,83 @@ public class IFrameLivre extends JInternalFrame {
 				refresh();
 			}
 		});
+		rdbtnIsbn.setSelected(true);
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(rdbtnAuteur);
+		bg.add(rdbtnTitre);
+		bg.add(rdbtnIsbn);
+		
 
 		panel_3.add(btnAjouter);
 		scrollPane.setViewportView(table);
 		System.out.println("fin de creation");
 
+	}
+
+	protected void refreshFilter(String recherche) {
+		// TODO Auto-generated method stub
+		try {
+			DefaultTableModel model = new DefaultTableModel();
+			List<ILivre> listes = b.rechercherLivre(recherche);
+			model.addColumn("ISBN");
+			model.addColumn("Auteur");
+			model.addColumn("Titre");
+			model.addColumn("Exemplaire");
+			for (ILivre livre : listes) {
+				String[] data = { String.valueOf(livre.getISBN()),
+						livre.getAuteur(), livre.getTitre(),
+						String.valueOf(livre.getNombreExemplaires()) };
+				//DefaultTableModel model = (DefaultTableModel) table.getModel();
+				
+				
+				//for (int i = 0; i < model.getRowCount(); i++) {
+					// model.removeRow(i);
+				//}
+				model.addRow(data);
+				// model.fireTableDataChanged();
+				//SwingUtilities.updateComponentTreeUI(this);
+
+			}
+			table.setModel(model);
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			table.getSelectionModel().addListSelectionListener(
+					new ListSelectionListener(){
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							// TODO Auto-generated method stub
+							selectedRow = table.getSelectedRow();
+							
+							
+						}
+					}
+			        
+			);
+			
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	protected void delete() {
+		// TODO Auto-generated method stub
+		try {
+			//List<ILivre> livres = b.getMaBibliotheque();
+			if(selectedRow >-1){
+				b.supprimerLivre(Long.parseLong((String)table.getValueAt(selectedRow, 0)));
+				System.out.println("row "+selectedRow);
+				refresh();
+				
+				
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	public void refresh() {
@@ -224,15 +279,29 @@ public class IFrameLivre extends JInternalFrame {
 				//DefaultTableModel model = (DefaultTableModel) table.getModel();
 				
 				
-				for (int i = 0; i < model.getRowCount(); i++) {
+				//for (int i = 0; i < model.getRowCount(); i++) {
 					// model.removeRow(i);
-				}
+				//}
 				model.addRow(data);
 				// model.fireTableDataChanged();
 				//SwingUtilities.updateComponentTreeUI(this);
 
 			}
 			table.setModel(model);
+			table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			table.getSelectionModel().addListSelectionListener(
+					new ListSelectionListener(){
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							// TODO Auto-generated method stub
+							selectedRow = table.getSelectedRow();
+							
+							
+						}
+					}
+			        
+			);
+			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
