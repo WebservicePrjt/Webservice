@@ -167,6 +167,14 @@ public class IFrameLivre extends JInternalFrame {
 						resume();
 					}
 				});
+				
+				JButton btnCommentaire = new JButton("Commentaire");
+				btnCommentaire.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						commentaire();
+					}
+				});
+				panel_3.add(btnCommentaire);
 				panel_3.add(btnModifier);
 		panel_3.add(btnNewButton);
 
@@ -200,6 +208,14 @@ public class IFrameLivre extends JInternalFrame {
 		scrollPane.setViewportView(table);
 		System.out.println("fin de creation");
 
+	}
+
+	protected void commentaire() {
+		// TODO Auto-generated method stub
+		if(selectedRow > -1){
+			//new JDialogCommentaire((String)table.getValueAt(selectedRow, 0)).setVisible(true);
+		}
+		
 	}
 
 	protected void resume() {
