@@ -174,6 +174,14 @@ public class IFrameLivre extends JInternalFrame {
 						commentaire();
 					}
 				});
+				
+				JButton btnEmprunt = new JButton("Emprunt");
+				btnEmprunt.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						emprunt();
+					}
+				});
+				panel_3.add(btnEmprunt);
 				panel_3.add(btnCommentaire);
 				panel_3.add(btnModifier);
 		panel_3.add(btnNewButton);
@@ -208,6 +216,25 @@ public class IFrameLivre extends JInternalFrame {
 		scrollPane.setViewportView(table);
 		System.out.println("fin de creation");
 
+	}
+
+	protected void emprunt() {
+		// TODO Auto-generated method stub
+		List<ILivre> listes;
+		try {
+			listes = b.getMaBibliotheque();
+			for(ILivre l : listes){
+				if(l.getISBN()==Long.parseLong((String)table.getValueAt(selectedRow, 0))){
+					b.emprunterLivre(l, JDialogConnect.e);
+					
+				}
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	protected void commentaire() {

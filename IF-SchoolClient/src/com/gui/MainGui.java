@@ -78,7 +78,10 @@ public class MainGui {
 		frmWebServiceApplicaiton.setJMenuBar(menuBar);
 		
 		JMenu mnBiblio = new JMenu("Biblio");
+		//JMenu mnEmprunt = new JMenu("Emprunt");
+		
 		menuBar.add(mnBiblio);
+		//menuBar.add(mnEmprunt);
 		frmWebServiceApplicaiton.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		
@@ -114,7 +117,16 @@ public class MainGui {
 		panel.setLayout(gl_panel);
 		
 		JMenuItem mntmLivre = new JMenuItem("Livre");
+		JMenuItem mntmEmprunt = new JMenuItem("Emprunt");
+		
 		mnBiblio.add(mntmLivre);
+		mnBiblio.add(mntmEmprunt);
+		
+		mntmEmprunt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		
 		mntmLivre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
