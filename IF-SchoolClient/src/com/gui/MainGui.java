@@ -115,15 +115,33 @@ public class MainGui {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
+		JMenuItem mntmAjouter = new JMenuItem("Ajouter");
+		JMenuItem mntmEmprunt = new JMenuItem("Emprunter");
+		JMenuItem mntmLivre = new JMenuItem("Rechercher");
 		
-		JMenuItem mntmLivre = new JMenuItem("Livre");
-		JMenuItem mntmEmprunt = new JMenuItem("Emprunt");
-		
-		mnBiblio.add(mntmLivre);
+		mnBiblio.add(mntmAjouter);
 		mnBiblio.add(mntmEmprunt);
+		mnBiblio.add(mntmLivre);
+		
+		
+		mntmAjouter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new JDialogAddLivre().setVisible(true);
+			}
+		});
 		
 		mntmEmprunt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JInternalFrame iframe = new IFrameEmprunt();
+				//iframe.setContentPane(desktopPane);
+				desktopPane.add(iframe);
+				iframe.setVisible(true);
+				try {
+					iframe.setMaximum(true);
+				} catch (PropertyVetoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		});

@@ -10,7 +10,7 @@ public interface IBibliotheque extends Remote {
 	public void ajouterCommentaireLivre(ILivre l,String commentaire) throws RemoteException;
 	public void ajouterResumeLivre(ILivre l,String resume) throws RemoteException;
 	public void emprunterLivre(ILivre l, IEtudiant e) throws RemoteException;
-	public void rendreLiver(ILivre l,IEtudiant e) throws RemoteException;
+	public void rendreLiver(long ISBN) throws RemoteException;
 	//public ArrayList<ILivre> livresEmpruntes(IEtudiant e) throws RemoteException;
 	public ArrayList<ILivre> getMaBibliotheque() throws RemoteException;
 }

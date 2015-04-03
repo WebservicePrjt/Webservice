@@ -103,7 +103,7 @@ public class IFrameLivre extends JInternalFrame {
 		panel_2.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)),
 				"Recherche", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
-		JRadioButton rdbtnIsbn = new JRadioButton("ISBN");
+		//JRadioButton rdbtnIsbn = new JRadioButton("ISBN");
 		
 		JRadioButton rdbtnTitre = new JRadioButton("Titre");
 		
@@ -125,7 +125,7 @@ public class IFrameLivre extends JInternalFrame {
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(rdbtnIsbn)
+					//.addComponent(rdbtnIsbn)
 					.addGap(18)
 					.addComponent(rdbtnTitre)
 					.addGap(18)
@@ -142,7 +142,7 @@ public class IFrameLivre extends JInternalFrame {
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnValider)
-						.addComponent(rdbtnIsbn)
+						//.addComponent(rdbtnIsbn)
 						.addComponent(rdbtnTitre)
 						.addComponent(rdbtnAuteur))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -175,7 +175,7 @@ public class IFrameLivre extends JInternalFrame {
 					}
 				});
 				
-				JButton btnEmprunt = new JButton("Emprunt");
+				JButton btnEmprunt = new JButton("Emprunter");
 				btnEmprunt.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						emprunt();
@@ -205,11 +205,11 @@ public class IFrameLivre extends JInternalFrame {
 				refresh();
 			}
 		});
-		rdbtnIsbn.setSelected(true);
+		rdbtnTitre.setSelected(true);
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(rdbtnAuteur);
 		bg.add(rdbtnTitre);
-		bg.add(rdbtnIsbn);
+		//bg.add(rdbtnIsbn);
 		
 
 		panel_3.add(btnAjouter);

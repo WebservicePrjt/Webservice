@@ -10,7 +10,7 @@ public class BibliothequeClient{
 	/*public static void main(String[] args){	
 		try{
 			IBibliotheque b = (IBibliotheque) Naming.lookup("rmi://localhost:1099/IF_School");
-			System.out.println("Bienvenue sur IF-School, votre bibliothèque en ligne");
+			System.out.println("Bienvenue sur IF-School, votre biblioth��que en ligne");
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Veuillez saisir votre nom et prenom s'il vous plait");
 			System.out.println("Nom : ");
@@ -24,8 +24,8 @@ public class BibliothequeClient{
 				System.out.println("1 - Ajouter un livre");
 				System.out.println("2 - Supprimer un livre");
 				System.out.println("3 - Rechercher un livre");
-				System.out.println("4 - Ajouter un commentaire à un livre");
-				System.out.println("5 - Ajouter un résumé à un livre");
+				System.out.println("4 - Ajouter un commentaire �� un livre");
+				System.out.println("5 - Ajouter un r��sum�� �� un livre");
 				System.out.println("6 - Emprunter un livre");
 				System.out.println("7 - Retourner un livre");
 				System.out.println("0 - Quitter");
@@ -57,7 +57,7 @@ public class BibliothequeClient{
 						sortie = true;
 						break;
 					default:
-						System.out.println("Choix incorrect, veuillez réessayer");
+						System.out.println("Choix incorrect, veuillez r��essayer");
 						break;
 				}
 			}
@@ -76,7 +76,7 @@ public class BibliothequeClient{
 		System.out.println("ISBN du livre voulez vous remettre ?");
 		long choix = sc.nextLong();
 		
-		//b.rendreLiver(choix, e);
+		b.rendreLiver(choix);
 	}
 	
 	public ArrayList<ILivre> listeDesLivre(IBibliotheque b) throws RemoteException{
@@ -104,7 +104,7 @@ public class BibliothequeClient{
 		ArrayList<ILivre> livres = rechercherLivre(b, sc);
 		System.out.println("Veuillez saisir le numero du livre que vous voulez emprunter");
 		int choix = sc.nextInt();
-		System.out.println("Resumé : ");
+		System.out.println("Resum�� : ");
 		String comm = sc.next();
 		comm = e.getNom()+" "+ e.getPrenom() +" : "+ comm;
 		b.ajouterCommentaireLivre(livres.get(choix-1), comm);
@@ -114,7 +114,7 @@ public class BibliothequeClient{
 		System.out.println("Veuillez saisir le titre ou l'auteur du livre");
 		String critere = sc.next();
 		ArrayList<ILivre> livres = b.rechercherLivre(critere);
-		System.out.println("Résultats de la recherche ("+livres.size()+" livre(s) trouvés)");
+		System.out.println("R��sultats de la recherche ("+livres.size()+" livre(s) trouv��s)");
 		for (int i=0;i<livres.size();i++) {
 			System.out.println((i+1)+" - "+livres.get(i).affiche());
 		}
@@ -137,7 +137,7 @@ public class BibliothequeClient{
 		System.out.println("Combien d'exemplaire en avez vous ?");
 		int nbExemplaire = sc.nextInt();
 		b.ajouterLivre(isbn, titre, auteur,nbExemplaire);
-		System.out.println("Votre livre a bien été ajouté");
+		System.out.println("Votre livre a bien ��t�� ajout��");
 	}
 	
 }
